@@ -1,0 +1,46 @@
+FROM maven:3.9.6-amazoncorretto-17-al2023 as base
+RUN yum install git -y && git clone https://github.com/balaji-kp/springboot-react-fullstack-backend.git
+WORKDIR /springboot-react-fullstack-backend
+ENV DB_NAME=userDB
+ENV DB_URL=database-1.ctap86niaksk.ap-south-1.rds.amazonaws.com
+ENV DB_USERNAME=admin
+ENV DB_PASSWORD=password
+ENV FRONTEND_ENDPOINT=http://localhost:3000
+RUN mvn clean install 
+EXPOSE 8080
+USER root
+ENTRYPOINT ["java","-jar","./target/springboot-Mysql-loginpageDemo.jar"]
+
+FROM openjdk:17-alpine
+ENV DB_NAME=userDB
+ENV DB_URL=database-1.ctap86niaksk.ap-south-1.rds.amazonaws.com
+ENV DB_USERNAME=admin
+ENV DB_PASSWORD=password
+ENV FRONTEND_ENDPOINT=http://localhost:3000
+WORKDIR /springboot-react-fullstack-backend
+COPY --from=base /springboot-react-fullstack-backend/target/springboot-Mysql-loginpageDemo.jar .
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","springboot-Mysql-loginpageDemo.jar"]
+
+FROM node:18.1.0
+ENV REACT_APP_base_url=http://13.201.10.16:8080
+RUN apt update -y && apt install git -y && git clone -b main https://github.com/balaji-kp/springboot-react-fullstack-frontend.git
+WORKDIR /springboot-react-fullstack-frontend
+RUN npm i
+CMD ["npm","start"]
+
+kubectl run my-shell --rm -i --tty --image node:18.1.0 -- bash
+
+mysql error on minikube:
+	solution: /var/lib/minesql
+
+INSERT INTO `fullstack`.`user` (`id`, `email`, `name`, `username`) VALUES ('3', 'prem', 'prem', 'prem');
+
+REACT_APP_base_url=http://13.201.10.16:8080
+
+kubectl port-forward svc/springboot-crud-svc 8080:8080 --address 0.0.0.0 &
+
+kubectl port-forward svc/react-frontend-svc 3000:3000 --address 0.0.0.0 &
+
+ps -ef|grep port-forward
+kill -9 PROCESS_ID
