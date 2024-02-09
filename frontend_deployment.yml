@@ -14,12 +14,9 @@ spec:
     spec:
       containers:
         - name: react-frontend
-          image: 01112021/react-frontend:sucess2
+          image: 01112021/react-frontend:nginx-13.235.31.106-8080
           ports:
-            - containerPort: 3000
-          env:   # Setting Enviornmental Variables
-            - name: REACT_APP_base_url # Setting Database password from Secret
-              value: http://13.201.10.16:8080
+            - containerPort: 80
 
 ---
 
@@ -32,7 +29,6 @@ spec:
     app: react-frontend
   ports:
     - protocol: "TCP"
-      port: 3000 # The port that the service is running on in the cluster
-      targetPort: 3000 # The port exposed by the service
-      nodePort: 31311
+      port: 80 # The port that the service is running on in the cluster
+      targetPort: 80 # The port exposed by the service
   type: NodePort # type of the service.
