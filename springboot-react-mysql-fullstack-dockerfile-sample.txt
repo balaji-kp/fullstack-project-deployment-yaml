@@ -111,3 +111,6 @@ kubectl port-forward svc/grafana-svc-ext 8184:80 --address 0.0.0.0 &
 
 kubectl get secrets grafana -o yaml
 echo WHBpU0J2VTJ4U2RWZ056aDNzaU5JUFJSc0hMMWRxazNoME1sdzNXMw== | base64 -d; echo
+
+minikube ip
+while true; do curl http://192.168.49.2:31313/users;curl http://192.168.49.2:31313/users; curl http://192.168.49.2:31311; done
