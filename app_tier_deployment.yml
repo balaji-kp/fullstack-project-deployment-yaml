@@ -27,7 +27,7 @@ spec:
             - name: DB_PASSWORD # Setting Database password from Secret
               value: password
             - name: FRONTEND_ENDPOINT # Setting Database password from Secret
-              value: http://http://13.201.10.16:3000
+              value:http://13.235.31.106:8181
 
 ---
 
