@@ -109,3 +109,5 @@ helm install grafana grafana/grafana
 kubectl expose svc/grafana --type=NodePort --target-port=3000 --name=grafana-svc-ext
 kubectl port-forward svc/grafana-svc-ext 8184:80 --address 0.0.0.0 &
 
+kubectl get secrets grafana -o yaml
+echo WHBpU0J2VTJ4U2RWZ056aDNzaU5JUFJSc0hMMWRxazNoME1sdzNXMw== | base64 -d; echo
