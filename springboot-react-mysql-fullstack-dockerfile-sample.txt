@@ -88,3 +88,12 @@ second deploy sprinboot-backend.yml
 3, build react images 
     ENV BACKEND_URL=http://13.235.31.106:8080   ==> svc for sprinboot-backend pods
                                                    port-forward svc/springboot-crud-svc 8080:8080 --address 0.0.0.0
+
+
+
+expossing svc on particular pod is important
+kubectl port-forward svc/springboot-crud-svc 8080:8080 --address 0.0.0.0
+      \\ 8080 is exposed port for svc, http://public-ip:8080 --> it will forward traffic to springboot-crud-svc which is 
+									listing on 8080
+kubectl port-forward svc/react-frontend-svc 8181:80 --address 0.0.0.0
+                        
