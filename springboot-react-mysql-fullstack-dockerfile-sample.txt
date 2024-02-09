@@ -101,3 +101,11 @@ minikube addons enable metrics-server
 
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm install prometheus prometheus-community/prometheus
+kubectl expose svc/prometheus-server --type=NodePort --target-port=9090 --name=prometheus-svc-ext
+kubectl port-forward svc/promethus-svc-ext 8182:80 --address 0.0.0.0 &
+
+helm repo add grafana https://grafana.github.io/helm-charts
+helm install grafana grafana/grafana
+kubectl expose svc/grafana --type=NodePort --target-port=3000 --name=grafana-svc-ext
+kubectl port-forward svc/grafana-svc-ext 8184:80 --address 0.0.0.0 &
+
