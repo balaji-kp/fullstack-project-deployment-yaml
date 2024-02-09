@@ -16,7 +16,7 @@ ENV DB_NAME=userDB
 ENV DB_URL=database-1.ctap86niaksk.ap-south-1.rds.amazonaws.com
 ENV DB_USERNAME=admin
 ENV DB_PASSWORD=password
-ENV FRONTEND_ENDPOINT=http://localhost:3000
+ENV FRONTEND_ENDPOINT=http://localhost:300
 WORKDIR /springboot-react-fullstack-backend
 COPY --from=base /springboot-react-fullstack-backend/target/springboot-Mysql-loginpageDemo.jar .
 EXPOSE 8080
@@ -29,10 +29,12 @@ WORKDIR /springboot-react-fullstack-frontend
 RUN npm i
 CMD ["npm","start"]
 
+===================
+
 # Use the official Node.js runtime as the base image
 FROM node:18 as build
 
-ENV BACKEND_URL=http://springboot-curd-svc
+ENV BACKEND_URL=http://13.235.31.106:8080
 
 RUN git clone https://github.com/balaji-kp/springboot-react-fullstack-frontend.git
 # Set the working directory in the container
@@ -42,8 +44,6 @@ WORKDIR /springboot-react-fullstack-frontend
 
 # Install dependencies
 RUN npm install
-
-
 
 # Build the React app for production
 RUN npm run build
@@ -59,7 +59,7 @@ EXPOSE 80
 
 # Start Nginx when the container runs
 CMD ["nginx", "-g", "daemon off;"]
-
+===================
 
 kubectl run my-shell --rm -i --tty --image node:18.1.0 -- bash
 
@@ -76,3 +76,15 @@ kubectl port-forward svc/react-frontend-svc 3000:3000 --address 0.0.0.0 &
 
 ps -ef|grep port-forward
 kill -9 PROCESS_ID
+
+===============
+
+first deploy db
+second deploy sprinboot-backend.yml
+	    - name: FRONTEND_ENDPOINT # Setting Database password from Secret
+              value: http://13.235.31.106:8181 ==> svc of react-frontend pods,
+                                                       kubectl port-forward svc/react-frontend-svc 8181:80 --address 0.0.0.0
+
+3, build react images 
+    ENV BACKEND_URL=http://13.235.31.106:8080   ==> svc for sprinboot-backend pods
+                                                   port-forward svc/springboot-crud-svc 8080:8080 --address 0.0.0.0
