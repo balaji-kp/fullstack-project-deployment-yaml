@@ -17,6 +17,11 @@ spec:
           image: 01112021/react-springboot-mysql-stack
           ports:
             - containerPort: 8080
+          resources:
+            limits:
+              cpu: 100m
+            requests:
+              cpu: 100m
           env:   # Setting Enviornmental Variables
             - name: DB_URL   # Setting Database host address from configMap
               value: mysql
